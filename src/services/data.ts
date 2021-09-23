@@ -3,7 +3,6 @@ let puppeteer;
 
 if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
   chrome = require("chrome-aws-lambda");
-  puppeteer = require("puppeteer-core");
 } else {
   puppeteer = require("puppeteer");
 }
@@ -24,6 +23,8 @@ export async function getPosts() {
     ignoreHTTPSErrors: true,
   });
   const page = await browser.newPage();
+
+  await page.goto(`https://www.instagram.com/${user_instagram}/`);
 
   const imgList = await page.evaluate(() => {
     const nodeList = document.querySelectorAll("article img");
