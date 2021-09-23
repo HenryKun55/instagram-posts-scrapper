@@ -25,21 +25,14 @@ export async function getPosts() {
   });
   const page = await browser.newPage();
 
-  await page.goto(`https://www.instagram.com/${user_instagram}/`);
-
   const imgList = await page.evaluate(() => {
-    // Toda essa função será executada no browser
-
-    // Pegar imagens que estão na parte de posts
     const nodeList = document.querySelectorAll("article img");
 
-    // Transformar NodeList em array
+    //@ts-ignore
     const imgArray = [...nodeList];
 
-    // Transformar os nodes (elementos html) em objetos javascript
     const imgList = imgArray.map((img) => ({ src: img.src }));
 
-    // Colocar para fora da função
     return imgList;
   });
 
