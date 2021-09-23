@@ -7,9 +7,9 @@ if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
   puppeteer = require("puppeteer");
 }
 
-const user_instagram = "codigotecnologia";
+exports.handler = async function (event, context) {
+  const user_instagram = "codigotecnologia";
 
-export async function getPosts() {
   const browser = await puppeteer.launch({
     args: [
       //@ts-ignore
@@ -38,5 +38,11 @@ export async function getPosts() {
   });
 
   await browser.close();
-  return imgList;
-}
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      status: "ok",
+      posts: imgList,
+    }),
+  };
+};
